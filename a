@@ -1,0 +1,43 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+
+class ManavApp(App):
+    def build(self):
+        self.title = 'Manav Uygulaması'
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        self.label = Label(text='Manav Satış Ekranı', font_size=24, size_hint=(1, 0.2))
+        layout.add_widget(self.label)
+
+        self.meyve_input = TextInput(hint_text='Meyve Adı', size_hint=(1, 0.2))
+        layout.add_widget(self.meyve_input)
+
+        self.fiyat_input = TextInput(hint_text='Fiyat (TL)', input_filter='float', size_hint=(1, 0.2))
+        layout.add_widget(self.fiyat_input)
+
+        self.miktar_input = TextInput(hint_text='Miktar (kg)', input_filter='float', size_hint=(1, 0.2))
+        layout.add_widget(self.miktar_input)
+
+        self.total_label = Label(text='Toplam Tutar: 0 TL', size_hint=(1, 0.2))
+        layout.add_widget(self.total_label)
+
+        hesapla_button = Button(text='Hesapla', size_hint=(1, 0.2), on_press=self.hesapla_tutar)
+        layout.add_widget(hesapla_button)
+
+        return layout
+
+    def hesapla_tutar(self, instance):
+        meyve = self.meyve_input.text
+        try:
+            fiyat = float(self.fiyat_input.text)
+            miktar = float(self.miktar_input.text)
+            toplam = fiyat * miktar
+            self.total_label.text = f"{meyve} için Toplam Tutar: {toplam:.2f} TL"
+        except ValueError:
+            self.total_label.text = "Lütfen geçerli bir sayı girin."
+
+if __name__ == '__main__':
+    ManavApp().run()
