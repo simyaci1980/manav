@@ -18,6 +18,11 @@ jobs:
       with:
         python-version: '3.9'
 
+    - name: Configure Git
+      run: |
+        git config --global user.email "altinsoy_ali@hotmail.com"
+        git config --global user.name "Alim"
+
     - name: Install dependencies
       run: |
         pip install buildozer
